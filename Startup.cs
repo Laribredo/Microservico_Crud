@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microservico_Crud.DBContexts;
+using Microservico_Crud.Model;
 using Microservico_Crud.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,7 @@ namespace Microservico_Crud
             services.AddDbContext<CaseContext>(o => o.UseSqlServer(Configuration.GetConnectionString("ProductDB")));
             services.AddControllers().AddNewtonsoftJson();
             services.AddTransient<ICaseRepository, CaseRepository>();
+            services.AddTransient<IMessageView, MessageView>();
 
             services.AddSwaggerGen(
             swagger =>

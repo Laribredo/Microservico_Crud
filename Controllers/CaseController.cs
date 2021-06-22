@@ -32,14 +32,14 @@ namespace Microservico_Crud.Controllers
         public IActionResult Get(int id)
         {
             var product = _caseRepository.GetCaseByID(id);
-            return new OkObjectResult(product);
+            return Ok(product);
         }
 
         [HttpGet("Number/{number}", Name = "GetByCaseNumber")]
         public IActionResult GetByCaseNumber(string number)
         {
             var product = _caseRepository.GetCaseByNumber(number);
-            return new OkObjectResult(product);
+            return Ok(product);
         }
 
         [HttpPost]
@@ -47,12 +47,9 @@ namespace Microservico_Crud.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var scope = new TransactionScope())
-                {
-                    _caseRepository.InsertCase(cases);
-                    scope.Complete();
-                    return CreatedAtAction(nameof(Get), new { id = cases.Id }, cases);
-                }
+
+                return Created(nameof(Get), _caseRepository.InsertCase(cases));
+                
             }
             else
             {
@@ -66,12 +63,8 @@ namespace Microservico_Crud.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var scope = new TransactionScope())
-                {
-                    _caseRepository.UpdateCase(cases);
-                    scope.Complete();
-                    return new OkResult();
-                }
+                return Ok(_caseRepository.UpdateCase(cases));
+                
             }
             else
             {
@@ -84,8 +77,8 @@ namespace Microservico_Crud.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _caseRepository.DeleteCase(id);
-            return new OkResult();
+            
+            return  Ok(_caseRepository.DeleteCase(id));
         }
     }
 }

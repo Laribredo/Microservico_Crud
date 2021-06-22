@@ -1,4 +1,5 @@
 ﻿using Microservico_Crud.Domain;
+using Microservico_Crud.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,14 @@ namespace Microservico_Crud.Repository
 {
     public interface ICaseRepository
     {
+        IMessageView _message { get; set; }
+
         IEnumerable<Case> GetCases();
         Case GetCaseByID(int cases);
         Case GetCaseByNumber(string caseNumber);
-        bool InsertCase(Case cases);
-        void DeleteCase(int caseId);
-        bool UpdateCase(Case cases);
+        MessageView InsertCase(Case cases);
+        MessageView DeleteCase(int caseId);
+        MessageView UpdateCase(Case cases);
         void Save();
     }
 }
